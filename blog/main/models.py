@@ -1,9 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
-
-import datetime
-
+from django.contrib.auth.models import User
 
 class Comments(models.Model):
     """
@@ -13,7 +11,7 @@ class Comments(models.Model):
     date_of_creation = models.DateField(default=timezone.now)
     content = models.CharField(max_length=200)
     blog = models.ForeignKey("Blog", on_delete=models.CASCADE)
-    author = models.ForeignKey("Blogger", on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
     def __str__(self) -> str:
@@ -28,7 +26,7 @@ class Blog(models.Model):
     date_of_creation = models.DateField(default=timezone.now)
     title = models.CharField(max_length=100, help_text="Title for your blog.")
     text = models.TextField(help_text="Enter your main text here.")
-    author = models.ForeignKey("Blogger", on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
     class Meta:
@@ -36,27 +34,10 @@ class Blog(models.Model):
 
 
     def __str__(self) -> str:
-        return self.title
+        return f'{self.title}, ({str(self.author)})'
     
 
     def get_absolute_url(self):
         return reverse("main:blog-detail", args=[str(self.id)])
     
 
-class Blogger(models.Model):
-    """
-    Модель для хранения данных автора.
-    """
-
-    nick = models.CharField(max_length=15, help_text="Enter your nickname here")
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    date_of_creation = models.DateField(default=timezone.now)
-
-
-    def __str__(self) -> str:
-        return self.nick
-    
-
-    def get_absolute_url(self):
-        return reverse("main:blogger-detail", args=[str(self.id)])
