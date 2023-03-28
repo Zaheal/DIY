@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-class Comments(models.Model):
+class Comment(models.Model):
     """
     Модель, хранящая в себе комментарии, сделанные некоторыми авторами к блогам.
     """
@@ -14,8 +14,12 @@ class Comments(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
+    class Meta:
+        ordering = ['-date_of_creation']
+
+
     def __str__(self) -> str:
-        return f'{self.author}, {self.blog.title}'
+        return f'{self.author}: {self.blog.title}'
     
 
 class Blog(models.Model):
@@ -30,7 +34,7 @@ class Blog(models.Model):
 
 
     class Meta:
-        ordering = ['date_of_creation']
+        ordering = ['-date_of_creation']
 
 
     def __str__(self) -> str:

@@ -23,7 +23,7 @@
       {% block sidebar %}
       <ul class="sidebar-nav">
           <li><a href="{% url 'main:index' %}">Home</a></li>
-          <!-- <li><a href="{% url 'main:blogs' %}">All books</a></li>
+          <li><a href="{% url 'main:blogs' %}">All blogs</a></li>
           <li><a href="{% url 'main:bloggers' %}">All bloggers</a></li>
           {% if user.is_authenticated %}
             <li>User: {{ user.get_username }}</li>
@@ -35,7 +35,7 @@
           {% if perms.registration.can_mark_returned %}
             <li>Staff</li>
             <li><a href="{% url 'main:all-borrowed' %}">All borrowed</a></li>
-          {% endif %} -->
+          {% endif %}
       </ul>
      {% endblock %}
       </div>

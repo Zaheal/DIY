@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Bloggers</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Blogger List</h1>
+
+    {% if user_list %}
+        <ul>
+            {% for user in user_list %}
+                <li>
+                    <a href="{{ user.get_absolute_url }}">{{ user.username }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no bloggers in db.</p>
+    {% endif %}
+{% endblock %}

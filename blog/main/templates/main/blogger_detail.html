@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Blogger Page</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Blogger: {{ user }}</h1>
+
+    <h2>Blogs list:</h2>
+    {% if user.blog_set.all %}
+        {% for blog in user.blog_set.all %}
+            <li>
+                <a href="{% url 'main:blog-detail' blog.pk %}">{{ blog.title }}</a> ({{ blog.date_of_creation }})
+            </li>
+        {% endfor %}
+    {% else %}
+        <p>{{ user }} have not any blog</p>
+    {% endif %}
+{% endblock %}
+

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Blog Page</title>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ blog.title }}</h1>
+
+    <p><strong>Post date</strong> ({{ blog.date_of_creation }})</p>
+    <p><strong>Author:</strong> {{ blog.author }}</p>
+    <h4><strong>Description</strong></h4>
+    <p>{{ blog.text }}</p>
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Comments</h4>
+        
+        {% if blog.comment_set.all %}
+            {% for comment in blog.comment_set.all %}
+                <hr>
+                <a href="{% url 'main:blogger-detail' comment.author.pk %}">{{ comment.author }}</a> ({{ comment.date_of_creation }}) - {{ comment.content }}
+            {% endfor %}
+        {% else %}
+            <p>There are no comments</p>
+        {% endif %}
+    </div>
+{% endblock %}
