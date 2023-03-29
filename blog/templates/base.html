@@ -30,7 +30,7 @@
             <li><a href="{% url 'main:blog-create' %}">Create blog</a></li>
             <li><a href="{% url 'registration:logout'%}?next={{request.path}}">Logout</a></li>
           {% else %}
-            <li><a href="{% url 'registration:login'%}?next={{request.path}}">Login</a></li>
+            <li><a href="{% url 'registration:login'%}?next={{request.path}}">Login</a> | <a href="{% url 'registration:registrate' %}">Registration</a></li>
           {% endif %}
       </ul>
      {% endblock %}
