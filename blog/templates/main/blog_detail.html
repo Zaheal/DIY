@@ -23,5 +23,6 @@
         {% else %}
             <p>There are no comments</p>
         {% endif %}
+        <a href="{% url 'main:comment-create' blog.pk %}">Create your comment.</a>
     </div>
 {% endblock %}

@@ -1,5 +1,5 @@
+from typing import Any, Dict
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views import generic
@@ -49,3 +49,29 @@ class BlogDetailView(generic.DetailView):
 class BloggerDetailView(generic.DetailView):
     model = User
     template_name = "main/blogger_detail.html"
+    context_object_name = 'user_object'
+
+
+class BlogCreate(LoginRequiredMixin, generic.CreateView):
+    model = Blog
+    fields = ['title', 'text']
+
+
+    def get_initial(self) -> Dict[str, Any]:
+        initial = super(BlogCreate, self).get_initial()
+        initial = initial.copy()
+        initial['author'] = self.request.user
+        return initial
+
+
+class CommentCreate(LoginRequiredMixin, generic.CreateView):
+    model = Comment
+    fields = ['blog', 'content']
+    
+
+    def get_initial(self) -> Dict[str, Any]:
+        initial = super(CommentCreate, self).get_initial()
+        initial = initial.copy()
+        initial['author'] = self.request.user
+        initial['blog'] = Blog.objects.get(id=self.kwargs['pk'])
+        return initial
