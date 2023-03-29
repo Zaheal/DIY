@@ -11,7 +11,7 @@
         <ul>
             {% for user in user_list %}
                 <li>
-                    <a href="{{ user.get_absolute_url }}">{{ user.username }}</a>
+                    <a href="{% url 'main:blogger-detail' user.pk %}">{{ user.username }}</a>
                 </li>
             {% endfor %}
         </ul>
